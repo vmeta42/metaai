@@ -1,0 +1,16 @@
+matplotlib==3.2.2
+numpy
+pandas
+parse==1.19.0
+pathtools==0.1.2
+Pillow==9.0.1
+PyYAML==6.0
+scikit-learn==0.24.2
+scipy
+six
+tensorboard==2.7.0
+torch==1.9.1
+torchmetrics==0.5.1
+torchvision==0.10.1
+tqdm
+
