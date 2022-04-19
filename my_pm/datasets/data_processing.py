@@ -34,7 +34,7 @@ def preprocess(data, mode=0):
 '''
 k-means聚类欠采样解决类比不平衡问题
 '''
-def cluster_undersampling(data, n_clusters=50, n=1000):
+def cluster_undersampling(data, data_labels, n_clusters=100, n=10000):
     '''
     正样本降采样，聚类，对于每个类选取距离质心距离最近的n个样本作为代表
     Args:
@@ -44,9 +44,11 @@ def cluster_undersampling(data, n_clusters=50, n=1000):
 
     Returns: final_data
     '''
-    # 经过降采样后的数据
+    # 经过降采样后的数据 和 对应的 labels
     final_data = None
-    kmeans = KMeans(n_clusters=n_clusters, random_state=0).fit(data)
+    final_labels = None
+
+    kmeans = MiniBatchKMeans(n_clusters=n_clusters, random_state=0).fit(data)
     # 聚类的类别
     labels = kmeans.labels_
     # 距离矩阵 [n_samples, n_clusters]
@@ -59,13 +61,21 @@ def cluster_undersampling(data, n_clusters=50, n=1000):
         sort_index = dst[labels == label][:, int(label)].argsort()[:n]
         # cur_label_data.shape: [n_samples, n_features]
         cur_label_data = data[labels == label][sort_index]
+        # datasets labels (0 or 1)
+        cur_labels = data_labels[labels == label][sort_index]
+
         if final_data is None:
             final_data = cur_label_data
         else:
             final_data = np.concatenate((final_data, cur_label_data), axis=0)
+
+        if final_labels is None:
+            final_labels = cur_labels
+        else:
+            final_labels = np.concatenate((final_labels, cur_labels), axis=0)
         # print('label: {}\n X:{}\n'.format(label, cur_label_data))
 
-    return final_data
+    return final_data, final_labels.ravel()
 
 DIV = 1e-5
 

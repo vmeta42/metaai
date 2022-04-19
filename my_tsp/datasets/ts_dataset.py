@@ -53,7 +53,7 @@ class TimeSeriesDataset(object):
 
     def data_normalize(self, dataset):
         scaler = MinMaxScaler()
-        dataset = scaler.fit_transform(dataset)  # 后续 self.scaler可用于 inverse_transform
+        dataset = scaler.fit_transform(dataset)  # 后续 self.scaler 可用于 inverse_transform
         return dataset, scaler
 
     def train_label_generator(self, dataset_X_Y):

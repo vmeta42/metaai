@@ -16,8 +16,6 @@ def main(args):
     dSet = pd.read_csv(data_path)[['InternalVol', 'InternalIR']].values
     print("dSet.shape", dSet.shape)
 
-
-
     Data_utils = data_processing.Data_utility(dSet, args.num_obs_to_train, args.predict_seq_len,
                                         args.horizon, args.normalize, args.use_split, args.use_cuda)
     # Data = Data_utility(dSet, 0.6, 0.2, args.cuda, args.horizon, args.window, args.normalize);

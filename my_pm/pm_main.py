@@ -31,14 +31,14 @@ if __name__ == "__main__":
     # TODO 每种机器学习模型配置一个模型参数文件
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--use_local_data', type=bool, default=False, help='初始使用原始csv数据训练则设置为False，'
+    parser.add_argument('--use_local_data', type=bool, default=True, help='初始使用原始csv数据训练则设置为False，'
                                                                            '如果已经将训练集和测试集保存到本地了则设置为True，'
                                                                            '方便每一次训练测试加载、处理数据的速度')
     # 初始化读取处理所有的csv文件
     parser.add_argument('--csv_files_path', type=str, default='D:\DeskFiles\metaAI相关资料\\battery_datasets\BatteryfaultMarkingData-logic_NO2\\', help='存放csv文件夹的路径')
     #保存成本地文件(已处理好、可直接训练的训练集、测试集文件)
-    parser.add_argument('--train_cache_path', type=str, default='D:\DeskFiles\meta-AI\data\pm_datasets\\train_cachev2.npy', help='存放到本地的训练集文件')
-    parser.add_argument('--test_cache_path', type=str, default='D:\DeskFiles\meta-AI\data\pm_datasets\\test_cachev2.npy', help='存放到本地的测试集文件')
+    parser.add_argument('--train_cache_path', type=str, default='D:\CodeFiles\data\metaAI_data\data\pm_datasets\\train_cachev2.npy', help='存放到本地的训练集文件')
+    parser.add_argument('--test_cache_path', type=str, default='D:\CodeFiles\data\metaAI_data\data\pm_datasets\\test_cachev2.npy', help='存放到本地的测试集文件')
 
     parser.add_argument('--use_split', type=bool, default=True)
     parser.add_argument("--kpi_list", "-kpi", type=list, default=['monomer_voltage', 'monomer_resistance', 'temperature', 'battery_status'])

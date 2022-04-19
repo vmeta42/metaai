@@ -4,10 +4,12 @@
 @Author  : dong.yachao
 '''
 import os
+import time
 import random
 import numpy as np
 from tqdm import tqdm
 from sklearn.model_selection import train_test_split
+from sklearn.utils import shuffle
 # 保存模型
 import joblib
 
@@ -39,8 +41,28 @@ def train(args):
         train_cache = np.load(args.train_cache_path, allow_pickle=True).item()
         test_cache = np.load(args.test_cache_path, allow_pickle=True).item()
 
+        # 对训练集中的正样本(status=0)进行聚类降采样
         X_train = train_cache['data']
         y_train = train_cache['labels']
+        # 1.筛选出正样本数据
+        X_train_1 = X_train[y_train == 1]
+        y_train_1 = y_train[y_train == 1]
+        # 负样本数据
+        X_train_0 = X_train[y_train == 0]
+        y_train_0 = y_train[y_train == 0]
+
+        # 2.进行正样本降采样
+        print("Start undersampling.....")
+        start_time = time.time()
+        X_train_1, y_train_1 = data_processing.cluster_undersampling(X_train_1, y_train_1)
+        print('undersampling cost time: ', time.time() - start_time)
+
+
+
+        # 3.返回降采样后的正+负样本
+        X_train = np.concatenate((X_train_1, X_train_0), axis=0)
+        y_train = np.concatenate((y_train_1, y_train_0))
+        X_train, y_train = shuffle(X_train, y_train)
 
         X_test = test_cache['data']
         y_test = test_cache['labels']
@@ -50,9 +72,10 @@ def train(args):
     model = cls_model.train_model(use_model=args.model, X_train=X_train, y_train=y_train, args=args)
 
     # 保存模型到本地
-    joblib.dump(model, os.path.join(args.model_path, args.model) + 'v2.lib')
+    joblib.dump(model, os.path.join(args.model_path, args.model) + 'v3.lib')
 
     # 测试模型
     pred_report = cls_model.test_model(model=model, X_test=X_test, y_test=y_test)
 
     return pred_report
+

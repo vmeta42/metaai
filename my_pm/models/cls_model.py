@@ -13,6 +13,15 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 # GBDT 分类模型
 from sklearn.ensemble import GradientBoostingClassifier
+# XGBoost
+import xgboost as xgb     # 原生xgboost库
+from xgboost.sklearn import XGBClassifier   # sklearn xgboost
+# LightGBM
+import lightgbm as lgb   # 原生lightgbm库
+from lightgbm.sklearn import LGBMClassifier   # sklearn lightgbm
+
+
+
 # 保存模型
 import joblib
 
@@ -46,6 +55,21 @@ def train_model(use_model, X_train, y_train, args):
 
     elif use_model == 'random_forest':
         cls_model = RandomForestClassifier()
+
+    elif use_model == 'xgboost':
+        cls_model = XGBClassifier(
+            learning_rate=0.1,
+            gamma=0.1,
+            reg_alpha=2,
+            reg_lambda=2,
+            max_depth=6,
+            min_child_weight=6,
+            colsample_bytree=0.7,
+            colsample_bylevel=0.7,
+            verbosity=2)    # xgb.XGBClassifier() XGBoost分类模型
+
+    elif use_model == 'lightgbm':
+        cls_model = LGBMClassifier(num_leaves=31, learning_rate=0.1, n_estimators=20)
 
     else:
         cls_model = GradientBoostingClassifier()
