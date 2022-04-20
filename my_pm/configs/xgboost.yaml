@@ -1,0 +1,12 @@
+
+# xgboost params
+params:
+     'tree_method': 'hist'   # if gpu, set 'gpu_hist'
+     'booster': 'gbtree'
+     'objective': 'multi:softmax'
+     'num_class': 2
+     'max_depth': 6
+     'eval_metric': 'merror'
+     'eta': 0.01
+
+num_boost_round: 10000
