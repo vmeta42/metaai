@@ -34,7 +34,7 @@ def preprocess(data, mode=0):
 '''
 k-means聚类欠采样解决类比不平衡问题
 '''
-def cluster_undersampling(data, data_labels, n_clusters=100, n=10000):
+def cluster_undersampling(data, data_labels, n_clusters=100, n=80000):
     '''
     正样本降采样，聚类，对于每个类选取距离质心距离最近的n个样本作为代表
     Args:

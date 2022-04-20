@@ -13,10 +13,17 @@ from progressbar import *
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
+from pathlib import Path
 
 from my_pm.datasets import auto_labeling, data_processing, pm_dataset
 from my_trainer import train
 from my_pm.utils import util
+
+FILE = Path(__file__).resolve()
+ROOT = FILE.parents[0]  # YOLOv5 root directory
+if str(ROOT) not in sys.path:
+    sys.path.append(str(ROOT))  # add ROOT to PATH
+ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 
 
 def main(args):
@@ -46,9 +53,13 @@ if __name__ == "__main__":
     parser.add_argument('--Tc', type=int, default=288*7, help='变化率特征')
     parser.add_argument('--Tg', type=int, default=288*7, help='梯度特征')
 
-    parser.add_argument('--model', type=str, default='gbdt', help='')
-    parser.add_argument('--model_path', type=str, default='D:\DeskFiles\meta-AI\model_checkpoints\pm_checkpoints', help='保存训练好模型的路径')
+    parser.add_argument('--model', type=str, default='xgboost', help='')
+    parser.add_argument('--model_path', type=str, default=ROOT / 'model_checkpoints/pm_checkpoints', help='保存训练好模型的路径')
+    parser.add_argument('--model_path_name', type=str, default='exp', help='保存训练好模型的路径')
 
+    # 模型参数
+    parser.add_argument('--xgboost_params', type=str, default=ROOT / 'configs/xgboost.yaml', help='xgboost 模型参数')
+    parser.add_argument('--lightgbm_params', type=str, default=ROOT / 'configs/lightgbm.yaml', help='lightGBM 模型参数')
 
     args = parser.parse_args()
 
@@ -66,13 +77,16 @@ if __name__ == "__main__":
         def flush(self):
             pass
 
-    # log_path = os.path.join('..', 'model_checkpoints', args.model)
-    # util.mkdirs(log_path)
-    # sys.stdout = Logger(os.path.join(log_path, args.save.split('.')[0]) + '.txt')
-    # print('--------args----------\n')
-    # for k in list(vars(args).keys()):
-    #     print('%s: %s' % (k, vars(args)[k]))
-    # print('--------args----------\n')
+
+    save_dir = util.increment_path(Path(args.model_path) / args.model_path_name)
+    save_dir.mkdir(parents=True, exist_ok=True)
+
+    sys.stdout = Logger(save_dir / 'print.txt')
+
+    print('--------args----------\n')
+    for k in list(vars(args).keys()):
+        print('%s: %s' % (k, vars(args)[k]))
+    print('--------args----------\n')
 
     main(args=args)
 
