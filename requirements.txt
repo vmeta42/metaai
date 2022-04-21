@@ -13,4 +13,6 @@ torch==1.9.1
 torchmetrics==0.5.1
 torchvision==0.10.1
 tqdm
+xgboost
+lightgbm
 
