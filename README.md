@@ -92,8 +92,11 @@
 ps： 初次运行为加速每次训练，将csv文件经过数据处理后转换为 train_cache.npy 和 test_cache.npy, 之后训练测试加载这两个数据方便加速训练。
 # 五、参考
 
-https://github.com/comp5331-Xtimeseries/TPA-LSTM-NotOrigional
-https://github.com/Sanyam-Mehta/TPA-LSTM-PyTorch
-https://github.com/shunyaoshih/TPA-LSTM
+https://github.com/comp5331-Xtimeseries/TPA-LSTM-NotOrigional  
+
+https://github.com/Sanyam-Mehta/TPA-LSTM-PyTorch  
+
+https://github.com/shunyaoshih/TPA-LSTM  
+
 https://www.sciencedirect.com/science/article/pii/S240589632031185X
 
