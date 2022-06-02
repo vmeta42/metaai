@@ -1,4 +1,5 @@
 ![image](doc/images/MetaAI_logo.png)  
+![image](https://img.shields.io/badge/license-MIT-green)  
 # 一、项目简介
 本项目应用于IDC机房UPS电池故障预测，首选预测未来一段时间的电压（或其他判断电池故障的指标，如电池内阻），然后再根据业务人员判断是否故障的指标阈值进而判断每个时间点是否为异常值，即该电池在未来哪一个时间点或时间段可能会发生故障。
 # 二、目录架构
@@ -99,11 +100,8 @@
 ps： 初次运行为加速每次训练，将csv文件经过数据处理后转换为 train_cache.npy 和 test_cache.npy, 之后训练测试加载这两个数据方便加速训练。
 # 五、参考
 
-https://github.com/comp5331-Xtimeseries/TPA-LSTM-NotOrigional  
-
-https://github.com/Sanyam-Mehta/TPA-LSTM-PyTorch  
-
-https://github.com/shunyaoshih/TPA-LSTM  
-
-https://www.sciencedirect.com/science/article/pii/S240589632031185X
+https://github.com/comp5331-Xtimeseries/TPA-LSTM-NotOrigional   
+https://github.com/Sanyam-Mehta/TPA-LSTM-PyTorch   
+https://github.com/shunyaoshih/TPA-LSTM   
+https://www.sciencedirect.com/science/article/pii/S240589632031185X  
 
